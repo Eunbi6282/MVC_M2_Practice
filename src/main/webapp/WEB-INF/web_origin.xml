@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+<!-- web.xml은 톰켓 서비스가 시작될 때 각종 설정을 읽어서 톰켓에 적용한다. 
+	web.xml => 굉장히 중요. 수정하게 되면 톰켓서비스를 다시 시작해야 한다. 
+	주의 : 하나라도 xml문법에 맞지 않으면 톰켓 서비스가 작동되지 않는다.
+	web.xml에서 설정을 잡으면 jsp페이지 각각에서 매번 설정을 세팅하지 않아도 된다. -->
+	
+  <display-name>MVC_M2</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>peb.html</welcome-file>
+  </welcome-file-list>
+</web-app>
