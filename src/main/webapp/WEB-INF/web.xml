@@ -61,14 +61,7 @@
 	<!-- 서블릿(controller 설정) 매핑 설정
 		서블릿(servlet) : *java => html 로 출력하는 자바를 서블릿, but 요즘은 서블릿을 controller라고 부름 -->
 		<!-- 첫번째 서블릿 -->
-	<servlet>
-		<servlet-name>MVCBoardList</servlet-name>
-		<servlet-class>model2.mvcboard.ListController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MVCBoardList</servlet-name>
-		<url-pattern>/MVC_M2/list.do</url-pattern>
-	</servlet-mapping>
+	
 	
 	<!-- 서블릿 Controller 매핑 설정 -->
 		<!-- 두번째 서블릿 -->
@@ -83,8 +76,50 @@
 		<url-pattern>/MVC_M2/mvc_test/my.do</url-pattern>
 		-->
 	</servlet-mapping>
+	
+	<!-- MVCboard 글 목록보기 Controller 매핑 설정-->
+	<servlet>
+		<servlet-name>MVCBoardList</servlet-name>
+		<servlet-class>model2.mvcboard.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardList</servlet-name>
+		<url-pattern>/mvc_board/list.do</url-pattern>
+	</servlet-mapping>
 
-
+	<!-- 페이징 처리를 위한 설정 (변수값 할당) 출력 레코드 수 :10개, 페이지수 : 5-->
+	<context-param>
+		<param-name>POSTS_PER_PAGE</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>PAGES_PER_BLOCK</param-name>
+		<param-value>5</param-value>
+	</context-param>
+	
+	<!-- MVCboard 글 내용보기 Controller 매핑 설정-->
+	<servlet>
+		<servlet-name>MVCBoardView</servlet-name>
+		<servlet-class>model2.mvcboard.ViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardView</servlet-name>
+		<url-pattern>/mvc_board/view.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- MVCboard 글 수정,삭제 Controller 매핑 설정-->
+	<servlet>
+		<servlet-name>MVCBoardPass</servlet-name>
+		<servlet-class>model2.mvcboard.PassController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardPass</servlet-name>
+		<url-pattern>/mvc_board/pass.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	
 
 </web-app>
 
