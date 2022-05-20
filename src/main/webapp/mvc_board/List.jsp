@@ -53,7 +53,7 @@
 							${map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 						</td>
 						<td align = "left" > <!-- 링크 걸면서 제목 출력 -->
-							<a href = "../mvc_board/view.do?idx= ${row.idx }"> ${row.title }</a>
+							<a href = "../mvc_board/view.do?idx=${row.idx }"> ${row.title }</a>
 						</td>
 						<td>	<!-- 작성자 -->
 							${row.name }
@@ -82,7 +82,7 @@
                 ${ map.pagingImg }
             </td>
             <td width="100"><button type="button"
-                onclick="location.href='../mvcboard/write.do';">글쓰기</button></td>
+                onclick="location.href='../mvc_board/write.do';">글쓰기</button></td>
         </tr>
     </table>
 	

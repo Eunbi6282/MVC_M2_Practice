@@ -92,7 +92,7 @@ public class MVCBoardDAO extends DBConnPool{
 		//ViewController에서 요청 처리/ idx값으로 select하기
 	public MVCBoardDTO selectView(String idx) {
 		MVCBoardDTO dto = new MVCBoardDTO();	
-		String query = "SELECT * FROM mvcboard WHERE idx = ?";
+		String query = "SELECT * FROM mvcboard WHERE idx =?";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -176,8 +176,8 @@ public class MVCBoardDAO extends DBConnPool{
 		
 		try {
 			String query = "UPDATE mvcboard "
-					+ " SET title = ?, name = ?, content = ?, ofile = ?, sfile = ?"
-					+ " WHERE idx = ? and pass = ?"; // id와 password가 다 맞을 때 수정
+					+ " SET title=?, name=?, content=?, ofile=?, sfile=?"
+					+ " WHERE idx=? and pass=?"; // id와 password가 다 맞을 때 수정
 			// 쿼리문 준비
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getTitle()); //dto에서 title값 가져오기
@@ -186,7 +186,7 @@ public class MVCBoardDAO extends DBConnPool{
 			psmt.setString(4, dto.getOfile());
 			psmt.setString(5, dto.getSfile());
 			psmt.setString(6, dto.getIdx());
-			psmt.setString(6, dto.getPass());
+			psmt.setString(7, dto.getPass());
 			
 			result = psmt.executeUpdate();	//update 성공시 result 변수의 값이 > 0
 			

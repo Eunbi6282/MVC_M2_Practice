@@ -20,14 +20,14 @@ public class DBConnPool {
 	//기본 생성자 
 	public DBConnPool() {
 		
-		/*
+		
        try {
             // JDBC 드라이버 로드
             Class.forName("oracle.jdbc.OracleDriver");
 
             // DB에 연결
             String url = "jdbc:oracle:thin:@localhost:1521:xe";  
-            String id = "hr2";
+            String id = "HR2";
             String pwd = "1234"; 
             con = DriverManager.getConnection(url, id, pwd); 
 
@@ -36,8 +36,9 @@ public class DBConnPool {
         catch (Exception e) {            
             e.printStackTrace();
         }
-		*/
 		
+		
+		/*
 		System.out.println("DBCP 객체 출력 ");
 		
 		try {
@@ -57,7 +58,7 @@ public class DBConnPool {
 			System.out.println(e.getMessage()); //오류 메세지 출력 (간략 정보)
 		}
 		
-				
+		*/	
 	}
 	
 	//자원 연결 해제  (자원 반납) : close() 메소드 호출시 자원을 반납하도록 설정 

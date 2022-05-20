@@ -30,7 +30,7 @@
 	
 	<context-param>
 		<param-name>OracleID</param-name>
-		<param-value>hr2</param-value>
+		<param-value>HR2</param-value>
 	</context-param>
 	
 	<context-param>
@@ -90,15 +90,29 @@
 	<!-- 페이징 처리를 위한 설정 (변수값 할당) 출력 레코드 수 :10개, 페이지수 : 5-->
 	<context-param>
 		<param-name>POSTS_PER_PAGE</param-name>
-		<param-value>10</param-value>
+		<param-value> 5</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>PAGES_PER_BLOCK</param-name>
-		<param-value>5</param-value>
+		<param-value>2</param-value>
 	</context-param>
 	
+	<!-- 첨부 파일의 최대 용량 설정 (1MB)-->
+	<context-param>
+		<param-name>maxPostSize</param-name>
+		<param-value>1024000</param-value>
+	</context-param>
+	
+	
+	
+	
+	
+	
 	<!-- MVCboard 글 내용보기 Controller 매핑 설정-->
+	<!-- 어노테이션 @WebServlet 
+		ViewController => 클래스 위에 @WebServlet("/mvc_board/view.do")-->
+	<!--  
 	<servlet>
 		<servlet-name>MVCBoardView</servlet-name>
 		<servlet-class>model2.mvcboard.ViewController</servlet-class>
@@ -107,8 +121,11 @@
 		<servlet-name>MVCBoardView</servlet-name>
 		<url-pattern>/mvc_board/view.do</url-pattern>
 	</servlet-mapping>
+	-->
 	
 	<!-- MVCboard 글 수정,삭제 Controller 매핑 설정-->
+	<!-- 어노테이션 @WebServlet -->
+	<!--  
 	<servlet>
 		<servlet-name>MVCBoardPass</servlet-name>
 		<servlet-class>model2.mvcboard.PassController</servlet-class>
@@ -117,6 +134,7 @@
 		<servlet-name>MVCBoardPass</servlet-name>
 		<url-pattern>/mvc_board/pass.do</url-pattern>
 	</servlet-mapping>
+	-->
 	
 	
 	
