@@ -90,7 +90,7 @@
 	<!-- 페이징 처리를 위한 설정 (변수값 할당) 출력 레코드 수 :10개, 페이지수 : 5-->
 	<context-param>
 		<param-name>POSTS_PER_PAGE</param-name>
-		<param-value> 5</param-value>
+		<param-value> 2</param-value>
 	</context-param>
 	
 	<context-param>
