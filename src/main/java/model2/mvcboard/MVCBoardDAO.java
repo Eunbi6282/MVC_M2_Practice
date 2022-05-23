@@ -132,7 +132,7 @@ public class MVCBoardDAO extends DBConnPool{
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, idx);
-			psmt.executeUpdate();
+			rs= psmt.executeQuery();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("게시물 조회수 증가시 예외 발생");
@@ -143,11 +143,11 @@ public class MVCBoardDAO extends DBConnPool{
 	
 	
 	// 데이터 삽입 (Insert) 
-	public int insertWrite (MVCBoardDTO dto) {
+	public int insertWrite(MVCBoardDTO dto) { // 폼에서 넘겨받은 값들을 dto에 저장
 		
 		int result = 0;
 		try {
-			String query = "INSERT INTP mvcboard( "
+			String query = "INSERT INTO mvcboard( "
 					+ " idx, name, title, content, ofile, sfile, pass) "
 					+ " VALUES( " 
 					+ " seq_board_num.nextval, ?, ?, ?, ?, ?, ?)";

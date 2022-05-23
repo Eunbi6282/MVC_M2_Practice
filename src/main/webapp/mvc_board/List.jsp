@@ -66,7 +66,7 @@
 						</td>
 						<td>	<!-- 첨부파일 -->
 							<c:if test ="${not empty row.ofile}">
-								<a href ="../mvc_board/download.do?ofile=${row.ofile } & sfile=${row.sfile} & idx =${row.idx}"> [Down]</a>
+								<a href ="../mvc_board/download.do?ofile=${row.ofile}&sfile=${row.sfile}&idx =${row.idx}"> [Down]</a>
 							</c:if>
 						</td>
 					</tr>
@@ -82,7 +82,8 @@
                 ${ map.pagingImg }
             </td>
             <td width="100"><button type="button"
-                onclick="location.href='../mvc_board/write.do';">글쓰기</button></td>
+                onclick="location.href='../mvc_board/write.do';">글쓰기</button>
+            </td>
         </tr>
     </table>
 	

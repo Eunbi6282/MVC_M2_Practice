@@ -98,10 +98,10 @@
 		<param-value>2</param-value>
 	</context-param>
 	
-	<!-- 첨부 파일의 최대 용량 설정 (1MB)-->
+	<!-- 첨부 파일의 최대 용량 설정 (100MB)-->
 	<context-param>
 		<param-name>maxPostSize</param-name>
-		<param-value>1024000</param-value>
+		<param-value>102400000</param-value>
 	</context-param>
 	
 	

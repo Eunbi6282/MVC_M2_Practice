@@ -61,10 +61,6 @@
 				<button type = "button" onclick = "location.href='../mvc_board/list.do';"> 목록 바로가기</button>
 			</td>
 		</tr>
-		
-		
-		
-		
 	</table>
 </body>
 </html>
