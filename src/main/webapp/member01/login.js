@@ -12,7 +12,8 @@ $(document).ready(function(){
 	//입력한 아이디와 비밀번호를 갖고 loginPro.jsp 페이지 실행
 	$("#login").click(function(){
 		checkIt();//입력폼에 입력한 상황 체크
-		if(status){
+		
+		if(status){   //checkIt()의 결과가 true로 넘어왔다면
 		  //입력된 사용자의 아이디와 비밀번호를 얻어냄
 		  var query = {id : $("#id").val(), 
 				       passwd:$("#passwd").val()};

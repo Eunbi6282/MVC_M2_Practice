@@ -38,7 +38,7 @@ $(document).ready(function(){
 			success: function(data){
 				if(data == 1) {//정보수정 성공
 				  alert("회원정보가 수정되었습니다.");
-				  window.location.href("main.jsp");
+				  window.location.href = 'main.jsp';
 				}
 		   }
 		});
@@ -46,7 +46,7 @@ $(document).ready(function(){
 	
 	//modifyForm.jsp페이지의 [취소]버튼 클릭시 자동실행
 	$("#cancle").click(function(){
-		window.location.href("main.jsp");
+		window.location.href = 'main.jsp';
 	});
 	
 	//modify.jsp페이지의 [탈퇴]버튼을 클릭하면 자동실행

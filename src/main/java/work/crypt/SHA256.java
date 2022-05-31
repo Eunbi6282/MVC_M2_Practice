@@ -7,6 +7,7 @@ public class SHA256 {
 	
 	BASE64Encoder encoder = new BASE64Encoder();
 	BASE64Decoder decoder = new BASE64Decoder();
+		//C:\Program Files\Java\jre1.8.0_291\lib
 	
 	private static SHA256 s = new SHA256();
 	

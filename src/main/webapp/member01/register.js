@@ -44,7 +44,7 @@ $(document).ready(function(){
 		      url:"registerPro.jsp",
 		      data:query,
 		      success:function(data){
-		    	  window.location.href("main.jsp");
+		    	  window.location.href = 'main.jsp';
 		 	  }
 		  });
 	   }
