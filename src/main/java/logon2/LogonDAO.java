@@ -83,7 +83,7 @@ public class LogonDAO extends DBConnPool{  //DAO 실제 데이터를 select, insert, d
 	
 	// 로그인 처리 (loginPro.jsp) : 폼에서 넘겨받은 아이디와 패스워드를 DB와 대조
 		// 사용자 인중 -> DB정보 수정, DB정보 삭제
-		// 사용자 인증(MEmberCheck.jsp)에서 사용하는 메섣
+		// 사용자 인증(MEmberCheck.jsp)에서 사용하는 메서드
 	public int userCheck (String id, String passwd) {
 		int x = -1; // x : -1 아이디 존재하지 않음. x : 1  아이디 존재(인증 성공)
 		
@@ -116,6 +116,8 @@ public class LogonDAO extends DBConnPool{  //DAO 실제 데이터를 select, insert, d
 		}
 		return x;
 	}
+	
+	// 
 	
 	
 	

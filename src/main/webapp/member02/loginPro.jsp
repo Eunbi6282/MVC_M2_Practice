@@ -9,6 +9,7 @@
 	String id = request.getParameter("u_id");
 	String passwd = request.getParameter("u_pass");
 	
+	// System.out.print(id); 잘 넘어옴
 	LogonDAO manager = LogonDAO.getInstance();
 	int check = manager.userCheck(id, passwd); // 사용자 인증처리 메서드
 	

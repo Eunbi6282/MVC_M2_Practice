@@ -26,14 +26,33 @@ $(document).ready(function() {
 						$("#main_auth").load("loginForm.jsp");
 					else if(data == 0) { // 비밀번호 틀림
 						alert("비밀번호가 맞지 않습니다.");
-						$("#id").val("");
-			    		 $("#passwd").val("");
-			    	  	 $("#id").focus();
-					}
+						$("#u_id").val("");
+			    		 $("#u_passwd").val("");
+			    	  	 $("#u_pass").focus();
+					} else if(data == -1){//아이디 틀림
+		    		 alert("아이디가 맞지 않습니다.");
+		    		 $("#u_id").val("");
+		    		 $("#u_passwd").val("");
+		    	  	 $("#u_id").focus();
+		    	 }
 				}
 			});
 		}
 	});	
+	
+	// 로그아웃 버튼 클릭하면 자동실행
+	// logout.jsp 페이지 실행
+	$("#logout").click(function() {
+		$.ajax({
+			type:"POST",
+			url:"logout.jsp",
+			success: function(date) {
+				$("main_auth").load("loginForm.jsp");
+			}
+		});
+	});
+	
+	
 	
 });
 

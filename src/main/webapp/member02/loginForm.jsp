@@ -13,7 +13,9 @@
 	id = (String) session.getAttribute("u_id");  // 세션 설정해둔 u_id변수 가져옴
 %>
 	
-<% if(id == null || id.equals("")) {  // 인증되지 않은 사용자 영역%>	
+<% 
+System.out.print(id);
+if(id == null || id.equals("")) {  // 인증되지 않은 사용자 영역%>	
 	<div id = "status">
 		<ul>
 			<li><label for="id">아이디</label>

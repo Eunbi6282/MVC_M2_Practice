@@ -1,8 +1,10 @@
 package logon; 
 
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
+
 import common.DBConnPool;
-import work.crypt.BCrypt;
-import work.crypt.SHA256; 
 
 public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, delete, update
 
@@ -36,9 +38,23 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 				// orgPass : Form에서 넘겨받은 Pass (orginPassWord)
 				// // bcPass : 암호화 된 암호
 			String orgPass = Member.getPasswd();
-//			String shaPass = sha.Sha256Encrypt(orgPass.getBytes()); // hash
-//			String bcPass = BCrypt.hashpw(shaPass, BCrypt.gensalt());
+			byte[] targetBytes = orgPass.getBytes();
+			
+			// Base64 인코딩
+			Encoder encoder = Base64.getEncoder();
+			byte[] encodedBytes = encoder.encode(targetBytes);
+			String encodedTxt = new String(encodedBytes);
+			
+			// Base64디코딩
+			Decoder decoder = Base64.getDecoder();
+			byte[] decodedBytes = decoder.decode(encodedBytes);
+			String decodedTxt = new String (decodedBytes);
 				// bcPass : 암호화 된 암호
+			
+			System.out.println("인코딩전 orgPass : " + orgPass);
+			System.out.println("인코딩 : " +  encodedTxt);
+			System.out.println("인코딩 : " +  decodedTxt);
+			
 			
 			System.out.println("암호화되지 않은 패스워드 : " + orgPass);
 //			System.out.println("암호화된 패스워드 : " + bcPass);
@@ -47,8 +63,8 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 			
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1,Member.getId());
-//			psmt.setString(2, bcPass );   => 암호화된 password 저장
-			psmt.setString(2, Member.getPasswd() );  //암호화 되지 않은 패스워드 저장
+			psmt.setString(2, encodedTxt );   //=> 암호화된 password 저장
+//			psmt.setString(2, Member.getPasswd() );  //암호화 되지 않은 패스워드 저장
 			psmt.setString(3, Member.getName());
 			psmt.setTimestamp(4, Member.getReg_date());
 			psmt.setString(5, Member.getAddress());
@@ -72,11 +88,19 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 					//  x = 1 : 인증성공, 
 		
 		// 복호화 : 암호화된 Password를 해독된 Password로 변환
-//		SHA256 sha = SHA256.getInsatnce();
 		
 		try {
 			String orgPass = passwd;
-//			String shaPass = sha.getSha256(orgPass.getBytes());
+			byte[] targetBytes = orgPass.getBytes();
+			
+			// Base64 인코딩
+			Encoder encoder = Base64.getEncoder();
+			byte[] encodedBytes = encoder.encode(targetBytes);
+			String encodedTxt = new String(encodedBytes);
+			
+			// Base64디코딩
+			Decoder decoder = Base64.getDecoder();
+			
 			String sql = "SELECT passwd FROM member01 WHERE id = ?";
 			
 			psmt = con.prepareStatement(sql);
@@ -85,11 +109,14 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 			
 			if( rs.next()) {	// 아이디가 존재하면 rs.next가 true
 				String dbpasswd = rs.getString("passwd"); // db에서 가져온 패스워드를 dbpasswd에 담기
+					// 인코딩 되어있기 때문에 디코딩해서 넣어야 함
 				
-//				if(BCrypt.checkpw(shaPass, dbpasswd)) {
-				if(orgPass.equals(dbpasswd)) {
+				byte[] decodedBytes = decoder.decode(dbpasswd);
+				String decodedTxt = new String (decodedBytes); // decode처리됨
+				
+				if(orgPass.equals(decodedTxt)) {
 					x = 1;  // 폼에서 넘겨온 패스워드와 DB에서 가져온 패스워드가 일치할 때 x에 1을 할당
-				} else if(!orgPass.equals(dbpasswd)) {
+				} else if(!orgPass.equals(decodedTxt)) {
 					System.out.println(orgPass + "는 존재하지 않는 비밀번호 입니다.");
 					x = 0;
 				} else {
@@ -132,15 +159,22 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 		return x;
 	}
 	
-	// 회원정보 수정 (modifyForm.jsp): DB에서 회원정보의 값을 가져오는 메서드
+	// 회원정보 DB에서 가져와서 수정 (modifyForm.jsp): DB에서 회원정보의 값을 가져오는 메서드
 	public LogonDataBean getMember (String id, String passwd) {
 		// DTO 리턴 시켜주기
 		LogonDataBean member = null;
-//		SHA256 sha = SHA256.getInsatnce();
 		
 		try {
 			String orgPass = passwd;
-//			String shaPass = sha.getSha256(orgPass.getBytes()); // orgPass를 암호화 시키기
+			byte[] targetBytes = orgPass.getBytes();
+			
+			// Base64 인코딩
+			Encoder encoder = Base64.getEncoder();
+			byte[] encodedBytes = encoder.encode(targetBytes);
+			String encodedTxt = new String(encodedBytes);
+			
+			// Base64디코딩
+			Decoder decoder = Base64.getDecoder();
 			
 			String sql = "SELECT * FROM member01 WHERE id = ?";
 			psmt = con.prepareStatement(sql);
@@ -149,9 +183,10 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 			
 			if (rs.next()) {	// 해당 아이디가 DB에 존재한다.
 				String dbpasswd = rs.getString("passwd"); // db의 패스워드를 변수에 담는다.  
+				byte[] decodedBytes = decoder.decode(dbpasswd);
+				String decodedTxt = new String (decodedBytes); // decode처리됨
 				
-//				if( BCrypt.checkpw(shaPass, dbpasswd)) {
-				if(orgPass.equals(dbpasswd)) {
+				if(orgPass.equals(decodedTxt)) {
 					// DB의 passwd와 폼에서 넘겨온 Pass가 같을 때 처리할 부분
 						// DB에서 select한 레코드를 DTO (LogonDataBean)에 Setter주입해서 값을 반환
 					
@@ -183,10 +218,17 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 		//LogonDataBean member = new LogonDataBean();
 		// 아이디와 패스워드 확인 절차를 거친 후 업데이트 진행
 			// 넘어온 비밀번호를 암호화 시켜서 db에 있는 암호화된 비밀번호의 값과 대조해야 함
-//		SHA256 sha = SHA256.getInsatnce();	// 객체 활성화
 		try {
 			String orgPass = member.getPasswd();   // 비밀전호 안들어올 경우 유효성검사
-//			String shaPass = sha.getSha256(orgPass.getBytes());
+			byte[] targetBytes = orgPass.getBytes();
+			
+			// Base64 인코딩
+			Encoder encoder = Base64.getEncoder();
+			byte[] encodedBytes = encoder.encode(targetBytes);
+			String encodedTxt = new String(encodedBytes);
+			
+			// Base64디코딩
+			Decoder decoder = Base64.getDecoder();
 			
 			String sql = "SELECT passwd FROM member01 WHERE id = ?";
 			
@@ -197,9 +239,10 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 			if (rs.next()) { // 해당 아이디가 db에 존재한다.
 				// 폼에서 넘긴 패스워드와 DB에서 가져온 패스워드가 일치하는지 확인 후 처리
 				String dbpasswd = rs.getString("passwd");
+				byte[] decodedBytes = decoder.decode(dbpasswd);
+				String decodedTxt = new String (decodedBytes); // decode처리됨
 				
-//				if(BCrypt.checkpw(shaPass, dbpasswd)) { // 두 패스워드가 일치할 때
-				if(orgPass.equals(dbpasswd)) {
+				if(orgPass.equals(decodedTxt)) {
 					// DTO(member) 에서 들어온 값을 db에 UPDATE
 					sql = "UPDATE member01 SET name = ?, address = ?, tel = ?"
 							+ " WHERE id = ?";
@@ -230,10 +273,17 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 		int x = -1;  // x = -1:회원 탈퇴 실패
 					// x = 1; 회원 탈퇴 성공
 		
-//		SHA256 sha = SHA256.getInsatnce(); // 객체를 호출해서 변수에 할당
 		try {
 			String orgPass = passwd;
-//			String shaPass = sha.getSha256(orgPass.getBytes());
+			byte[] targetBytes = orgPass.getBytes();
+			
+			// Base64 인코딩
+			Encoder encoder = Base64.getEncoder();
+			byte[] encodedBytes = encoder.encode(targetBytes);
+			String encodedTxt = new String(encodedBytes);
+			
+			// Base64디코딩
+			Decoder decoder = Base64.getDecoder();
 			
 			String sql = "SELECT passwd FROM member01 WHERE id = ?";
 			psmt = con.prepareStatement(sql);
@@ -242,8 +292,10 @@ public class LogonDBBean extends DBConnPool{ // DAO : 실제 DB를 select, insert, 
 			
 			if (rs.next()) { // 아이디가 DB에 존재하는 경우
 				String dbpasswd = rs.getString("passwd");
-//				if (BCrypt.checkpw(shaPass, dbpasswd)) {
-				if(orgPass.equals(dbpasswd)) {
+				byte[] decodedBytes = decoder.decode(dbpasswd);
+				String decodedTxt = new String (decodedBytes); // decode처리됨
+				
+				if(orgPass.equals(decodedTxt)) {
 					sql = "DELETE member01 WHERE id = ?";
 					psmt = con.prepareStatement(sql);
 					psmt.setString(1, id);
